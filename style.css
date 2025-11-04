@@ -1,7 +1,7 @@
 {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -14,13 +14,14 @@ body {
   min-height: 100vh;
 }
 
+/* === Cabeçalho === */
 header {
   text-align: center;
   margin-top: 50px;
 }
 
 header h1 {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   color: #00b5cc;
   font-weight: 800;
   margin-bottom: 10px;
@@ -28,10 +29,11 @@ header h1 {
 
 header p {
   color: #b5b5b5;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   font-size: 1.2rem;
 }
 
+/* === Área de busca === */
 .search-area {
   display: flex;
   justify-content: center;
@@ -66,10 +68,10 @@ header p {
   color: #000;
 }
 
-/* Cards em coluna */
+/* === Container dos personagens (cards em coluna) === */
 .character-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* cards um embaixo do outro */
   align-items: center;
   gap: 25px;
   width: 90%;
@@ -77,14 +79,16 @@ header p {
   margin-bottom: 60px;
 }
 
-/* Card estilo dark */
+/* === Card === */
 .card {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   background-color: #3c3e44;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
-  max-width: 750px;
+  max-width: 700px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease;
 }
@@ -95,9 +99,11 @@ header p {
 
 .card img {
   width: 200px;
+  height: 200px;
   object-fit: cover;
 }
 
+/* === Conteúdo do card === */
 .card-content {
   padding: 20px;
   display: flex;
@@ -111,6 +117,7 @@ header p {
   margin-bottom: 8px;
 }
 
+/* === Status === */
 .status {
   display: flex;
   align-items: center;
@@ -137,6 +144,7 @@ header p {
   background-color: #9e9e9e;
 }
 
+/* === Localização e episódio === */
 .location,
 .episode {
   color: #9e9e9e;
@@ -144,6 +152,7 @@ header p {
   margin-top: 5px;
 }
 
+/* === Loading e erro === */
 .loading {
   text-align: center;
   margin-top: 40px;
@@ -165,6 +174,13 @@ header p {
   }
 }
 
+.erro {
+  text-align: center;
+  color: #ff6b6b;
+  margin-bottom: 20px;
+}
+
+/* === Rodapé === */
 footer {
   text-align: center;
   color: #777;
@@ -175,6 +191,10 @@ footer {
 footer a {
   color: #00ff9f;
   text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
 
 footer a:hover {
