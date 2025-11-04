@@ -1,75 +1,42 @@
 const API_URL = 'https://rickandmortyapi.com/api/character';
-const cardsContainer = document.getElementById('cards');
-const inputBusca = document.getElementById('busca');
-const loading = document.getElementById('loading');
-const erroMsg = document.getElementById('erro');
-let personagens = [];
+const container = document.getElementById('characterContainer');
+const searchInput = document.getElementById('searchInput');
 
-async function carregarPersonagens() {
+// Função para buscar personagens
+async function fetchCharacters(name = '') {
   try {
-    loading.style.display = 'flex';
-    erroMsg.style.display = 'none';
-    cardsContainer.innerHTML = '';
-
-    const resposta = await fetch(API_URL);
-    const dados = await resposta.json();
-    personagens = dados.results || [];
-
-    exibirPersonagens(personagens);
-  } catch (erro) {
-    mostrarErro('Erro ao carregar os personagens da API.');
-  } finally {
-    loading.style.display = 'none';
+    const response = await fetch(`${API_URL}?name=${name}`);
+    if (!response.ok) throw new Error('Personagem não encontrado');
+    const data = await response.json();
+    displayCharacters(data.results);
+  } catch (error) {
+    container.innerHTML = `<p style="text-align:center;">Nenhum personagem encontrado.</p>`;
   }
 }
 
-function exibirPersonagens(lista) {
-  cardsContainer.innerHTML = '';
-
-  if (lista.length === 0) {
-    mostrarErro('Nenhum personagem encontrado.');
-    return;
-  }
-
-  lista.forEach(personagem => {
-    const card = document.createElement('div');
-    card.classList.add('card');
-
-    const imagem = document.createElement('img');
-    imagem.src = personagem.image;
-    imagem.alt = personagem.name;
-
-    const info = document.createElement('div');
-    info.classList.add('card-info');
-
-    const nome = document.createElement('h2');
-    nome.textContent = personagem.name;
-
-    const status = document.createElement('p');
-    status.textContent = `${personagem.status} - ${personagem.species}`;
-
-    info.appendChild(nome);
-    info.appendChild(status);
-    card.appendChild(imagem);
-    card.appendChild(info);
-    cardsContainer.appendChild(card);
-  });
+// Função para exibir personagens
+function displayCharacters(characters) {
+  container.innerHTML = characters
+    .map(character => `
+      <div class="card">
+        <img src="${character.image}" alt="${character.name}">
+        <div class="card-content">
+          <h2>${character.name}</h2>
+          <div class="status">
+            <span class="status-dot ${character.status}"></span>
+            <span>${character.status} - ${character.species}</span>
+          </div>
+        </div>
+      </div>
+    `)
+    .join('');
 }
 
-function mostrarErro(msg) {
-  erroMsg.innerHTML = `${msg}<br><button class="retry-btn" onclick="carregarPersonagens()">Tentar novamente</button>`;
-  erroMsg.style.display = 'block';
-}
-
-// Função global para buscar por nome via console
-function buscarPorNome(nome) {
-  const filtrados = personagens.filter(p => p.name.toLowerCase().includes(nome.toLowerCase()));
-  exibirPersonagens(filtrados);
-  return filtrados;
-}
-
-inputBusca.addEventListener('input', () => {
-  buscarPorNome(inputBusca.value);
+// Evento de busca
+searchInput.addEventListener('input', e => {
+  const query = e.target.value.trim();
+  fetchCharacters(query);
 });
 
-carregarPersonagens();
+// Carrega os personagens iniciais
+fetchCharacters();
