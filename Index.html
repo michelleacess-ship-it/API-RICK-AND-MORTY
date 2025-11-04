@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BEM VINDO A Rick and Morty - by Michelle Dias</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEM VINDO AO SITE DE BUSCA RICK AND MORTY - by Michelle Dias</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <header>
-    <h1>Rick and Morty Explorer</h1>
+    <h1>BEM VINDO AO SITE DE BUSCA RICK AND MORTY</h1>
     <p>Busque e explore personagens da série</p>
     <input type="text" id="searchInput" placeholder="Buscar personagem..." />
   </header>
 
-  <main id="characterContainer" class="character-container"></main>
+  <main>
+    <!-- Loading -->
+    <div id="loading" class="loading" style="display: none;">
+      <div class="spinner"></div>
+      <p>Carregando personagens...</p>
+    </div>
+
+    <!-- Mensagem de erro -->
+    <div id="erro" class="erro" style="display: none;"></div>
+
+    <!-- Cards de personagens -->
+    <div id="characterContainer" class="character-container"></div>
+  </main>
 
   <footer>
-    <p>Dados fornecidos por <a href="https://rickandmortyapi.com/" target="_blank">Rick and Morty API</a></p>
+    <p>Dados fornecidos por 
+      <a href="https://rickandmortyapi.com/" target="_blank" style="color:#00ff9f; text-decoration:none;">
+        Rick and Morty API
+      </a>
+    </p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
