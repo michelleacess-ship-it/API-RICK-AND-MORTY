@@ -1,16 +1,33 @@
 const API_URL = 'https://rickandmortyapi.com/api/character';
 const container = document.getElementById('characterContainer');
 const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
+const loading = document.getElementById('loading');
+const erro = document.getElementById('erro');
 
 // Função para buscar personagens
 async function fetchCharacters(name = '') {
+  container.innerHTML = '';
+  erro.style.display = 'none';
+  loading.style.display = 'block';
+
   try {
     const response = await fetch(`${API_URL}?name=${name}`);
     if (!response.ok) throw new Error('Personagem não encontrado');
     const data = await response.json();
+
+    if (data.results.length === 0) {
+      erro.style.display = 'block';
+      erro.textContent = 'Nenhum personagem encontrado.';
+      return;
+    }
+
     displayCharacters(data.results);
   } catch (error) {
-    container.innerHTML = `<p style="text-align:center;">Nenhum personagem encontrado.</p>`;
+    erro.style.display = 'block';
+    erro.textContent = 'Nenhum personagem encontrado.';
+  } finally {
+    loading.style.display = 'none';
   }
 }
 
@@ -32,11 +49,11 @@ function displayCharacters(characters) {
     .join('');
 }
 
-// Evento de busca
-searchInput.addEventListener('input', e => {
-  const query = e.target.value.trim();
+// Evento: clicar no botão de busca
+searchButton.addEventListener('click', () => {
+  const query = searchInput.value.trim();
   fetchCharacters(query);
 });
 
-// Carrega os personagens iniciais
+// Carregar personagens iniciais
 fetchCharacters();
